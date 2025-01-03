@@ -41,7 +41,7 @@ export default class Updater {
         } catch (e) {}
         autoUpdater.quitAndInstall(true, forceRunAfter)
       })
-      if (process.platform === 'darwin') shell.openExternal('https://github.com/NoCrypt/migu/releases/latest')
+      if (process.platform === 'darwin') shell.openExternal('https://github.com/liqhtnd/miru/releases/latest')
       this.hasUpdate = false
       return true
     }

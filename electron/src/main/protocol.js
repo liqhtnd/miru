@@ -4,14 +4,14 @@ import path from 'path'
 
 if (process.defaultApp) {
   if (process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient('migu', process.execPath, [path.resolve(process.argv[1])])
+    app.setAsDefaultProtocolClient('miru', process.execPath, [path.resolve(process.argv[1])])
   }
 } else {
-  app.setAsDefaultProtocolClient('migu')
+  app.setAsDefaultProtocolClient('miru')
 }
 
 export default class Protocol {
-  // schema: migu://key/value
+  // schema: miru://key/value
   protocolMap = {
     auth: token => this.sendToken(token),
     malauth: token => this.sendMalToken(token),
@@ -21,7 +21,7 @@ export default class Protocol {
     donate: () => shell.openExternal('https://github.com/sponsors/ThaUnknown/')
   }
 
-  protocolRx = /migu:\/\/([a-z0-9]+)\/(.*)/i
+  protocolRx = /miru:\/\/([a-z0-9]+)\/(.*)/i
 
   /**
    * @param {import('electron').BrowserWindow} window
@@ -29,7 +29,7 @@ export default class Protocol {
   constructor (window) {
     this.window = window
 
-    protocol.registerHttpProtocol('migu', (req, cb) => {
+    protocol.registerHttpProtocol('miru', (req, cb) => {
       const token = req.url.slice(7)
       this.window.loadURL(development ? 'http://localhost:5000/app.html' + token : `file://${path.join(__dirname, '/app.html')}${token}`)
     })

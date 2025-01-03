@@ -59,8 +59,8 @@ export default class TorrentClient extends WebTorrent {
     super({
       dht: !settings.torrentDHT,
       maxConns: settings.maxConns,
-      downloadLimit: settings.torrentSpeed * 1048576 || 0,
-      uploadLimit: settings.torrentSpeed * 1572864 || 0, // :trolled:
+      downloadLimit: settings.downloadSpeed * 1048576 || 0,
+      uploadLimit: (settings.slowSeeding ? 1048576 : (settings.uploadSpeed * 1048576)) || 0, 
       torrentPort: settings.torrentPort || 0,
       dhtPort: settings.dhtPort || 0,
       natUpnp: SUPPORTS.permamentNAT ? 'permanent' : true
@@ -143,7 +143,7 @@ export default class TorrentClient extends WebTorrent {
   }
 
   async torrentReady (torrent) {
-    debug('Got torrent metadata: ' + torrent.name)
+    debug('Got torrent metadata: ' + torrent?.name)
     const files = torrent.files.map(file => {
       return {
         infoHash: torrent.infoHash,
@@ -196,7 +196,7 @@ export default class TorrentClient extends WebTorrent {
     const subfiles = files.filter(file => {
       return subRx.test(file.name) && (videoFiles.length === 1 ? true : file.name.includes(videoName))
     })
-    debug(`Found ${subfiles.length} subtitle files`)
+    debug(`Found ${subfiles?.length} subtitle files`)
     for (const file of subfiles) {
       const data = await file.arrayBuffer()
       if (targetFile !== this.current) return

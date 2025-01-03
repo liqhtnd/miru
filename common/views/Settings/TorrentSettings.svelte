@@ -141,9 +141,8 @@
 {/if}
 
 <h4 class='mb-10 font-weight-bold'>Client Settings</h4>
-<SettingCard title='Torrent Download Location' description='Path to the folder used to store torrents. By default this is the TMP folder, which might lose data when your OS tries to reclaim storage.  {SUPPORTS.isAndroid ? 'RESTART IS REQUIRED. /sdcard/ is internal storage, not external SD Cards. /storage/AB12-34CD/ is external storage, not internal. Thank you Android!' : ''}'>
-  <div
-    class='input-group w-300 mw-full'>
+<SettingCard title='Torrent Download Location' description='Path to the folder used to store torrents. By default this is the TMP folder, which might lose data when your OS tries to reclaim storage.  {SUPPORTS.isAndroid ? "RESTART IS REQUIRED. /sdcard/ is internal storage, not external SD Cards. /storage/AB12-34CD/ is external storage, not internal. Thank you Android!" : ""}'>
+  <div class='input-group w-300 mw-full'>
     <div class='input-group-prepend'>
       <button type='button' use:click={handleFolder} class='btn btn-primary input-group-append'>Select Folder</button>
     </div>
@@ -166,14 +165,14 @@
     <label for='torrent-streamed-download'>{settings.torrentStreamedDownload ? 'On' : 'Off'}</label>
   </div>
 </SettingCard>
-<SettingCard title='Transfer Speed Limit' description='Download/Upload speed limit for torrents, higher values increase CPU usage, and values higher than your storage write speeds will quickly fill up RAM.'>
+<!-- <SettingCard title='Transfer Speed Limit' description='Download/Upload speed limit for torrents, higher values increase CPU usage, and values higher than your storage write speeds will quickly fill up RAM.'>
   <div class='input-group w-100 mw-full'>
     <input type='number' inputmode='numeric' pattern={'[0-9]*.?[0-9]*'} bind:value={settings.torrentSpeed} min='0' max='50' step='0.1' class='form-control text-right bg-dark' />
     <div class='input-group-append'>
       <span class='input-group-text bg-dark'>MB/s</span>
     </div>
   </div>
-</SettingCard>
+</SettingCard> -->
 <SettingCard title='Max Number of Connections' description='Number of peers per torrent. Higher values will increase download speeds but might quickly fill up available ports if your ISP limits the maximum allowed number of open connections.'>
   <input type='number' inputmode='numeric' pattern='[0-9]*' bind:value={settings.maxConns} min='1' max='512' class='form-control text-right bg-dark w-100 mw-full' />
 </SettingCard>
@@ -195,3 +194,45 @@
     <label for='torrent-pex'>{settings.torrentPeX ? 'On' : 'Off'}</label>
   </div>
 </SettingCard>
+
+
+<h4 class='mb-10 font-weight-bold'>Limited Bandwidth Settings</h4>
+<SettingCard title='Sort By Size + Seeders' description="This option will sort the list of torrents by size and seeders. Resulting in less bandwidth usage.">
+  <div class='custom-switch'>
+    <input type='checkbox' id='eco-mode' bind:checked={settings.sortByEco} />
+    <label for='eco-mode'>{settings.sortByEco ? 'On' : 'Off'}</label>
+  </div>
+</SettingCard>
+<SettingCard title='Slow Seeding' description="Will limit upload speed to 1 MB/s. This might kill the swarm health. But very useful when you have a limited bandwidth.">
+  <div class='custom-switch'>
+    <input type='checkbox' id='slow-seeding' bind:checked={settings.slowSeeding} />
+    <label for='slow-seeding'>{settings.slowSeeding ? 'On' : 'Off'}</label>
+  </div>
+</SettingCard>
+<SettingCard title='Download Speed Limit' description='Download speed limit for torrents, higher values increase CPU usage, and values higher than your storage write speeds will quickly fill up RAM.'>
+  <div class='input-group w-100 mw-full'>
+    <input type='number' inputmode='numeric' pattern={'[0-9]*.?[0-9]*'} bind:value={settings.downloadSpeed} min='0' max='50' step='0.1' class='form-control text-right bg-dark' />
+    <div class='input-group-append'>
+      <span class='input-group-text bg-dark'>MB/s</span>
+    </div>
+  </div>
+</SettingCard>
+{#if !settings.slowSeeding}
+  <SettingCard title='Upload Speed Limit' description='Upload speed limit for torrents, setting this to 0 might causes problems.'>
+    <div class='input-group w-100 mw-full'>
+      <input type='number' inputmode='numeric' pattern={'[0-9]*.?[0-9]*'} bind:value={settings.uploadSpeed} min='0' max='50' step='0.1' class='form-control text-right bg-dark' />
+      <div class='input-group-append'>
+        <span class='input-group-text bg-dark'>MB/s</span>
+      </div>
+    </div>
+  </SettingCard>
+  {/if}
+<SettingCard title='Disable Loading Last Video On Startup' description='Loading last video on startup can increase your bandwidth usage while looking for new videos.'>
+  <div class='custom-switch'>
+    <input type='checkbox' id='disable-startup-video' bind:checked={settings.disableStartupVideo} />
+    <label for='disable-startup-video'>{settings.disableStartupVideo ? 'On' : 'Off'}</label>
+  </div>
+</SettingCard>
+  
+
+

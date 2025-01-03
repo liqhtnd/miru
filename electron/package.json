@@ -1,11 +1,11 @@
 {
   "name": "Miru",
-  "version": "5.5.9",
+  "version": "0.0.0",
   "private": true,
-  "author": "ThaUnknown_ <ThaUnknown@users.noreply.github.com>",
+  "author": "liqhtnd <liqhtnd@users.noreply.github.com>",
   "description": "Stream anime torrents, real-time with no waiting for downloads.",
   "main": "build/main.js",
-  "homepage": "https://github.com/ThaUnknown/miru#readme",
+  "homepage": "https://github.com/liqhtnd/miru#readme",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack build && concurrently --kill-others \"npm run web:watch\" \"npm run electron:start\"",
     "web:watch": "webpack serve",
@@ -15,13 +15,13 @@
     "publish": "npm run web:build && electron-builder -p always"
   },
   "devDependencies": {
-    "@electron/notarize": "^2.3.2",
+    "@electron/notarize": "^2.5.0",
     "common": "workspace:*",
     "discord-rpc": "4.0.1",
     "electron": "32.1.1",
     "electron-builder": "^24.13.3",
-    "electron-log": "^5.1.7",
-    "electron-updater": "^6.2.1",
+    "electron-log": "^5.2.4",
+    "electron-updater": "^6.3.9",
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
@@ -53,11 +53,11 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "ThaUnknown",
+        "owner": "liqhtnd",
         "repo": "miru"
       }
     ],
-    "appId": "com.github.thaunknown.miru",
+    "appId": "com.github.liqhtnd.miru",
     "electronLanguages": [
       "en-US"
     ],
